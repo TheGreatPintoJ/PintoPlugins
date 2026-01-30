@@ -3,13 +3,9 @@
 
 @import "{{ site.theme }}";
 
-.wrapper {
-  max-width: 50%;
+#title.hr {
+  margin: 0 0 -20px;
 }
-section {
-  max-width: 100%;
-}
-
 span.credits {
     position: absolute;
     bottom: 0;
@@ -19,4 +15,12 @@ span.credits.left {
 }
 span.credits.right {
   right: 0;
+}
+
+
+.wrapper {
+  max-width: 50%;
+}
+section {
+  max-width: 100%;
 }
