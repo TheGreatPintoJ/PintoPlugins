@@ -1,4 +1,5 @@
 # PintoPlugins
+---
 
 ## [PintoKits](/readmes/PintoKits.md)
 PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators to manage custom kits for players. Kits are defined in a kits.yml file and can be saved, removed, and given to players via commands.
