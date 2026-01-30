@@ -1,49 +1,55 @@
 <h1 align="center">PintoRecipes</h1>
-<p align="center">A spigot plugin to add custom recipes to your server</p>
+<p align="center">A Spigot plugin that provides a GUI to create, edit, view, and manage custom recipes (crafting and smelting variants) with full support for item NBT and per-recipe permissions/limits.</p>
 
-### Features
-* _Sleek_ GUI
-* Options for shaped, shapeless, furnace, blasting, smoking, campfire, and stonecutter recipes
-* Any item is craftable/smeltable/etc. (including nbt)
-* Option to limit how many of a custom item is crafted (including vanilla recipes if you create a 'custom' recipe for them)
-  * Permission to bypass crafting limitations (`pintorecipes.craftbypass`)
-* Permissions to limit who can craft any item (default to anybody)
+## Key features
+- GUI for save, edit, show, remove and list recipes
+- Supports shaped, shapeless, furnace, blasting, smoking, campfire and stonecutter recipes
+- Any item may be made craftable/smeltable (including NBT)
+- Optional craft limits per recipe; permission to bypass limits (`pintorecipes.craftbypass`)
+- Per-recipe craft permission `pintorecipes.craft.<recipe_name>`
+
+## Commands
+- `/pintorecipe` - Aliases: `/pr` `/precipes`
+- `/pintorecipes show <recipe_name>` — Open read-only GUI for a recipe
+- `/pintorecipes save <recipe_name>` — Open recipe creation GUI (cancelled if both input grid and result are empty on close)
+- `/pintorecipes edit <recipe_name>` — Open editable GUI for an existing recipe (same save rules as `save`)
+- `/pintorecipes remove <recipe_name>` — Delete recipe from storage
+- `/pintorecipes reload` — Reloads all recipes
+- `/pintorecipes list` — Open GUI that lists all available recipes
 
 
-### Commands
-* `/pintorecipes [show|save|edit|remove|list] [recipe_name]`
-    * `show <recipe_name>` - Opens a read-only GUI showing the recipe
-    * `save <recipe_name>` - Opens a recipe creating GUI. Closing without any items in either grid or result will result in saving being cancelled.
-    * `edit <recipe_name>` - Opens a writable GUI showing the recipe, saves on close with the same conditions as above (`save`)
-    * `remove <recipe_name>` - Removes specified recipe from config
-    * `list` - Opens a GUI showing all available recipes
-    * `reload` - Reloads recipes
+## Permissions
+- `pintorecipes.recipes` — use base command
+- `pintorecipes.recipes.show` — show recipes
+- `pintorecipes.recipes.save` — create recipes
+- `pintorecipes.recipes.edit` — edit recipes
+- `pintorecipes.recipes.remove` — remove recipes
+- `pintorecipes.recipes.list` — open recipe list GUI
+- `pintorecipes.craftbypass` — bypass craft limits and permission checks
+- `pintorecipes.craft.<recipe_name>` — allow crafting of `recipe_name`
 
-### Permissions
-* `pintorecipes.recipes # Permission to use '/pintorecipes'`
-* `pintorecipes.recipes.show # Permission to use '/pr show'`
-* `pintorecipes.recipes.save # Permission to use '/pr save'`
-* `pintorecipes.recipes.edit # Permission to use '/pr edit'`
-* `pintorecipes.recipes.remove # Permission to use '/pr remove'`
-* `pintorecipes.recipes.list # Permission to use '/pr list' or '/pr' (without args)`
-* `pintorecipes.recipes.reload # Permissiont to use '/pr reload'`
-* `pintorecipes.craftbypass # Permission to bypass crafting permissions and limits`
-* `pintorecipes.craft.<recipe_name> # Permission to craft specified recipe`
+## Configuration (`recipes.yml`)
+- Top-level keys are recipe identifiers (any string).
+- A recipe entry contains:
+  - `result` — raw serialized item (use the plugin GUI to produce correct data)
+  - `recipe` — rows/ingredients for the recipe input (first set = first row)
+  - `type` — recipe type: `shaped`, `shapeless`, `furnace`, `blasting`, `smoking`, `campfire`, `stonecutter`
+  - `enabled` — `true`/`false` for loading at server start
+  - `category` — optional grouping for GUIs/books
+  - `cooktime` / `experience` — for applicable smelting recipes
+- More information [here](https://thegreatpintoj.github.io/PintoPlugins/configs/PintoRecipes.html)
 
-### Config
-The `recipes.yml` file is where all custom recipes are stored.
-* The first key is whatever the name of the recipe is (defaults are endermite_spawnegg, netherite_sword, etc.)
-* `result` - This is the raw data of the item that spigot stores. I highly recommend leaving this be and using the commands to generate it.
-* `recipe` - This is where the recipe is stored. The first set of entries is the first row of the crafting grid, the second is the second row, etc. All entries beyond three will be ignored.
-* `enabled` - Whether to load the recipe when the server starts
-* `type` - The type of the recipe
-* `category` - The category of whatever book to put the recipe in
-* `cooktime` - The time it will take to finish cooking in ticks (only available for suitable recipe types)
-* `experience` - The amount of exp to give the player when item is taken out of container (only available for suitable recipe types)
-* More information [here](https://thegreatpintoj.github.io/PintoPlugins/configs/PintoRecipes.html)
+## Notes
+- Changes generally require a server restart to guarantee consistent state.
+- Use the plugin GUI to generate `result` data to avoid formatting errors.
+- To restrict vanilla recipe crafting, create a custom recipe with the same output and set limits/permissions.
 
-### Notes
-* I have not yet found a problem with reloading instead, but you might run into problems so it's better to restart
+## Troubleshooting
+- If a recipe does not appear: verify `enabled: true` and restart server.
+- If a GUI action fails: check server logs for stack traces; the plugin logs load/SQL errors at startup.
+- If any stack trace appears in the server logs (relating to this plugin), create an issue on the [GitHub Repo](https://github.com/TheGreatPintoJ/PintoRecipes/issues).
+- If craft limits or permissions aren't enforced: confirm permission nodes on the player and plugin restart.
 
-### Errors/Bugs
-Make an issue in this project's GitHub repository
+## Files of interest
+- `recipes.yml` — stored recipes (data-folder after run)
+- `crafts.db` — The SQLite database that stores player crafts
