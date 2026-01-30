@@ -3,8 +3,11 @@
 
 @import "{{ site.theme }}";
 
-.wrapper section {
+.wrapper {
   max-width: 50%;
+}
+section {
+  max-width: 100%;
 }
 
 span.credits {
