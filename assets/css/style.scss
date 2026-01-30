@@ -1,0 +1,19 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.wrapper section {
+  max-width: 50%;
+}
+
+span.credits {
+    position: absolute;
+    bottom: 0;
+}
+span.credits.left {
+  float: left;
+}
+span.credits.right {
+  float: right;
+}
