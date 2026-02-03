@@ -7,6 +7,9 @@
 - Any item may be made craftable/smeltable (including NBT)
 - Optional craft limits per recipe; permission to bypass limits (`pintorecipes.craftbypass`)
 - Per-recipe craft permission `pintorecipes.craft.<recipe_name>`
+- An Uncrafting GUI
+  - Supports switching through multiple recipes per item
+  - Can uncraft using custom recipes
 
 ## Commands
 - `/pintorecipe` - Aliases: `/pr` `/precipes`
